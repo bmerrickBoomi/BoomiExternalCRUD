@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace CustomBoomi
 {
-    public class CrudMain
+    public class CRUDMain
     {
         private static void Usage()
         {
