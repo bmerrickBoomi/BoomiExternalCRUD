@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net5.0</TargetFramework>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <ApplicationIcon />
+	  <OutputType>Exe</OutputType>
+	  <StartupObject />
+  </PropertyGroup>
+
+</Project>
