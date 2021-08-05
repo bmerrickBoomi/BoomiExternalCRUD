@@ -55,7 +55,16 @@ namespace CustomBoomi
                         sb.Append(line + Environment.NewLine);
                     }
 
-                    var json = JsonSerializer.Serialize(func.Invoke(null, new object[] { sb.ToString() }));
+                    string json;
+                    if (sb.ToString() == string.Empty)
+                    {
+                        json = JsonSerializer.Serialize(func.Invoke(null, null));
+                    }
+                    else
+                    {
+                        json = JsonSerializer.Serialize(func.Invoke(null, new object[] { sb.ToString() }));
+                    }
+
                     Console.WriteLine(json);
                 }
             }
