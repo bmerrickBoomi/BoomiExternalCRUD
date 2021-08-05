@@ -47,7 +47,7 @@ namespace CustomBoomi
                 }
                 else
                 {
-                    var line = "";
+                    var line = string.Empty;
                     var sb   = new StringBuilder();
 
                     while ((line = Console.ReadLine()) != null)
@@ -55,14 +55,15 @@ namespace CustomBoomi
                         sb.Append(line + Environment.NewLine);
                     }
 
-                    string json;
-                    if (sb.ToString() == string.Empty)
+                    var json  = string.Empty;
+                    var input = sb.ToString();
+                    if (input == string.Empty)
                     {
                         json = JsonSerializer.Serialize(func.Invoke(null, null));
                     }
                     else
                     {
-                        json = JsonSerializer.Serialize(func.Invoke(null, new object[] { sb.ToString() }));
+                        json = JsonSerializer.Serialize(func.Invoke(null, new object[] { input }));
                     }
 
                     Console.WriteLine(json);
