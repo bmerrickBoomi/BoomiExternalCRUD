@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
 
 namespace CustomBoomi
 {
@@ -8,47 +10,55 @@ namespace CustomBoomi
     {
         private static void Usage()
         {
-            Console.Error.WriteLine("Usage: [OperationName] > ex. BoomiCRUD.Display");
+            Console.Error.WriteLine("Usage: [Class.Method] > ex. BoomiCRUD.Display");
             Environment.Exit(1);
         }
 
-        public static int Main(string[] args)
+        private static void Error(string message)
         {
-            if (args.Length == 0)
+            Console.Error.WriteLine($"{message} does not exist, exiting");
+            Environment.Exit(1);
+        }
+
+        public static void Main(string[] args)
+        {
+            if (args.Length == 0 || args[0].Split(".").Length != 2)
             {
                 Usage();
             }
 
-            var split = args[0].Split(".");
-            if (split.Length != 2)
-            {
-                Usage();
-            }
-
+            var split    = args[0].Split(".");
             var assembly = Assembly.GetExecutingAssembly();
             var types    = assembly.GetTypes();
             var clsName  = split[0];
             var method   = split[1];
 
             var type = types.FirstOrDefault(x => x.Name == clsName);
-            if (type != null)
+            if (type == null)
             {
-                var func = type.GetMethods().FirstOrDefault(x => x.Name == method);
-                if (func != null)
-                {
-                    Console.WriteLine(func.Invoke(null, null));
-                }
-                else
-                {
-                    Console.Error.WriteLine($"{method} does not exist, exiting");
-                }
+                Error(clsName);
             }
             else
             {
-                Console.Error.WriteLine($"{clsName} does not exist, exiting");
-            }
+                var func = type.GetMethods().FirstOrDefault(x => x.Name == method);
+                if (func == null)
+                {
+                    Error(method);
+                }
+                else
+                {
+                    var line = "";
+                    var sb   = new StringBuilder();
 
-            return 0;
+                    while ((line = Console.ReadLine()) != null)
+                    {
+                        sb.Append(line + Environment.NewLine);
+                    }
+
+                    var json = JsonSerializer.Serialize(func.Invoke(null, new object[] { sb.ToString() }));
+                    Console.WriteLine(json);
+                }
+            }
         }
     }
 }
