@@ -8,18 +8,6 @@ namespace CustomBoomi
 {
     public class CRUDMain
     {
-        private static void Usage()
-        {
-            Console.Error.WriteLine("Usage: [Class.Method] > ex. BoomiCRUD.Display");
-            Environment.Exit(1);
-        }
-
-        private static void Error(string message)
-        {
-            Console.Error.WriteLine($"{message} does not exist, exiting");
-            Environment.Exit(1);
-        }
-
         public static void Main(string[] args)
         {
             if (args.Length == 0 || args[0].Split(".").Length != 2)
@@ -69,6 +57,17 @@ namespace CustomBoomi
                     Console.WriteLine(json);
                 }
             }
+        }
+        private static void Usage()
+        {
+            Console.Error.WriteLine("Usage: [Class.Method] > ex. BoomiCRUD.Display");
+            Environment.Exit(1);
+        }
+
+        private static void Error(string message)
+        {
+            Console.Error.WriteLine($"{message} does not exist, exiting");
+            Environment.Exit(1);
         }
     }
 }
