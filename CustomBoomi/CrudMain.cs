@@ -21,6 +21,7 @@ namespace CustomBoomi
             var clsName  = split[0];
             var method   = split[1];
 
+            // Use the A.B DDP from Boomi as the Class.Method to invoke
             var type = types.FirstOrDefault(x => x.Name == clsName);
             if (type == null)
             {
@@ -38,6 +39,7 @@ namespace CustomBoomi
                     var line = string.Empty;
                     var sb   = new StringBuilder();
 
+                    // Read from STDIN (document from Boomi)
                     while ((line = Console.ReadLine()) != null)
                     {
                         sb.Append(line + Environment.NewLine);
@@ -45,6 +47,8 @@ namespace CustomBoomi
 
                     var json  = string.Empty;
                     var input = sb.ToString();
+
+                    // If any string, pass it as an argument into the method
                     if (input == string.Empty)
                     {
                         json = JsonSerializer.Serialize(func.Invoke(null, null));
@@ -54,6 +58,7 @@ namespace CustomBoomi
                         json = JsonSerializer.Serialize(func.Invoke(null, new object[] { input }));
                     }
 
+                    // Write back to STDOUT (so Boomi can convert them back into documents)
                     Console.WriteLine(json);
                 }
             }
