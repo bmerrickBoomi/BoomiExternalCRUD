@@ -17,11 +17,12 @@ namespace CustomBoomi.CRUD
                 Draws = new List<Draw>()
             };
 
-            for (var i = 0; i < count; i++) {
+            for (var i = 1; i <= count; i++) {
 
                 var draw = new Draw {
                     Numbers = new List<int>(),
-                    Date = DateTime.Now.AddDays(rnd.Next(1, 50) * -1)
+                    Date = DateTime.Now.AddDays(rnd.Next(1, 50) * -1),
+                    DrawNumber = i
                 };
 
                 // Generate 5 random numbers between [1-99]

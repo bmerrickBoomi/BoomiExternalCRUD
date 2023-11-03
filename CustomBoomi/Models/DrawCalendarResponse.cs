@@ -13,5 +13,7 @@ namespace CustomBoomi.Models
         public List<int> Numbers { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int DrawNumber { get; set; }
     }
 }
